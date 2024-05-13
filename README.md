@@ -1,11 +1,23 @@
-# Hydrogen template: Skeleton
+# MARCUCCI - Italian Luxury Brand
 
-Hydrogen is Shopify’s stack for headless commerce. Hydrogen is designed to dovetail with [Remix](https://remix.run/), Shopify’s full stack web framework. This template contains a **minimal setup** of components, queries and tooling to get started with Hydrogen.
+What are the design principles of your site? (Color pallette, fonts, layout, etc.)
+BODONI - TEXT FONT
+COLOR PALLETE BLACK AND WHITE SIMPLE LUXURY
+LAYOUT E-COMMERCE SHOPIFY STYLE
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify/hydrogen-template#SESSION_SECRET=mock%20token&PUBLIC_STORE_DOMAIN=mock.shop)
+What is the purpose of your site? Why does it need to exist?
+It is a website where customes can purchase from the Italin Designer brand Marcucci.
 
-- [Check out Hydrogen docs](https://shopify.dev/custom-storefronts/hydrogen)
-- [Get familiar with Remix](https://remix.run/docs/)
+Does your site look good on multiple screen sizes, YES
+
+What is the Netlify URL of your site: https://marcucci.netlify.app/
+
+How does your site use state to keep track of user interaction?
+Hooks and counters for cart etc...
+
+Does your site fetch data from: an internal source? a third party API? Shopify API
+
+Does your site persist data using a third-party tool or database? Shopify CMS and database using GraphQL
 
 ## What's included
 
@@ -31,11 +43,6 @@ npm install -g netlify-cli@latest
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify/hydrogen-template#SESSION_SECRET=mock%20token&PUBLIC_STORE_DOMAIN=mock.shop)
 
-To create a new project, either click the "Deploy to Netlify" button above, or run the following command:
-
-```bash
-npx create-remix@latest --template=netlify/hydrogen-template
-```
 
 ## Local development
 
