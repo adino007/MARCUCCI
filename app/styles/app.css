@@ -119,7 +119,7 @@ aside li {
 }
 /* reveal aside */
 .overlay:target aside {
-  transform: translateX(calc(var(--aside-width) * -1));
+  transform: translateX(var(--aside-width));
 }
 
 /*
@@ -133,7 +133,7 @@ aside li {
   background: var(--color-dark); /* Dark background for contrast */
   color: var(--color-light); /* Ensures all text in the header is white */
   display: flex;
-  justify-content: center; /* Center the logo */
+  justify-content: right; /* Center the logo */
   height: var(--header-height);
   padding: 0 1rem;
   position: sticky;
@@ -146,7 +146,6 @@ aside li {
   justify-content: space-between; /* Space between logo and menu */
   align-items: center;
   width: 100%;
-  max-width: 1200px;
 }
 
 .header-logo {
@@ -166,7 +165,8 @@ aside li {
   justify-content: flex-end;
   align-items: center;
   flex-grow: 1;
-  gap: 1rem;
+  gap: 10;
+  margin-right: 5px; /* Add right margin to cart icon */
 }
 
 /* Ensuring all links within the header are white and visible */
@@ -175,11 +175,6 @@ aside li {
   color: var(--color-light); /* White text for links */
   text-decoration: none;
   margin: 0 10px;
-}
-
-.header-menu-mobile-toggle {
-  position: absolute;
-  left: 0;
 }
 
 /* Hover effect for links to slightly change color for user feedback */

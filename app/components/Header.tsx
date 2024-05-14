@@ -13,16 +13,20 @@ export function Header({ header, isLoggedIn, cart }: HeaderProps) {
   const { shop, menu } = header;
   return (
     <header className="header">
-      <div className="header-container">
-        <NavLink prefetch="intent" to="/" className="header-logo" end>
-          <strong>{shop.name}</strong>
-        </NavLink>
+      <div className="header-container" style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center' }}>
         <HeaderMenu
           menu={menu}
           viewport="desktop"
           primaryDomainUrl={header.shop.primaryDomain.url}
         />
-        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} menu={menu} />
+        <div style={{ textAlign: 'center' }}>
+          <NavLink prefetch="intent" to="/" className="header-logo" end>
+            <strong>{shop.name}</strong>
+          </NavLink>
+        </div>
+        <div style={{ textAlign: 'end' }}>
+          <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} menu={menu} />
+        </div>
       </div>
     </header>
   );
@@ -96,7 +100,7 @@ function HeaderCtas({
 
   return (
     <nav className="header-ctas" role="navigation">
-      <a className="header-menu-mobile-toggle" href="#mobile-menu-aside" style={{ position: 'absolute', left: 10 }}>
+      <a className="header-menu-mobile-toggle" href="#mobile-menu-aside" style={{ position: 'absolute', left: 20 }}>
         <h3>☰</h3>
       </a>
       <Aside id="mobile-menu-aside" heading="MENU">
@@ -143,7 +147,7 @@ function SearchToggle() {
 }
 
 function CartBadge({ count }: { count: number }) {
-  return <a href="#cart-aside">Cart {count}</a>;
+  return <a href="#cart-aside">Cart ({count})</a>;
 }
 
 function CartToggle({ cart }: Pick<HeaderProps, 'cart'>) {
