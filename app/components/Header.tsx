@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import type { HeaderQuery } from 'storefrontapi.generated';
 import type { LayoutProps } from './Layout';
 import { useRootLoaderData } from '~/root';
+import { Aside } from './Aside';
 
 type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn'>;
 
@@ -98,7 +99,7 @@ function HeaderCtas({
       <a className="header-menu-mobile-toggle" href="#mobile-menu-aside" style={{ position: 'absolute', left: 10 }}>
         <h3>☰</h3>
       </a>
-      <div id="mobile-menu-aside" className="mobile-menu-aside">
+      <Aside id="mobile-menu-aside" heading="MENU">
         <nav role="navigation">
           {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
             if (!item.url) return null;
@@ -125,7 +126,8 @@ function HeaderCtas({
             );
           })}
         </nav>
-      </div>
+      </Aside>
+
       <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
         {isLoggedIn ? 'Account' : 'Sign in'}
       </NavLink>
