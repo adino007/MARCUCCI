@@ -12,15 +12,17 @@ export function Header({ header, isLoggedIn, cart }: HeaderProps) {
   const { shop, menu } = header;
   return (
     <header className="header">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
-      </NavLink>
-      <HeaderMenu
-        menu={menu}
-        viewport="desktop"
-        primaryDomainUrl={header.shop.primaryDomain.url}
-      />
-      <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+      <div className="header-container">
+        <NavLink prefetch="intent" to="/" className="header-logo" end>
+          <strong>{shop.name}</strong>
+        </NavLink>
+        <HeaderMenu
+          menu={menu}
+          viewport="desktop"
+          primaryDomainUrl={header.shop.primaryDomain.url}
+        />
+        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} menu={menu} />
+      </div>
     </header>
   );
 }
@@ -38,25 +40,12 @@ export function HeaderMenu({
   const className = `header-menu-${viewport}`;
 
   function closeAside(event: React.MouseEvent<HTMLAnchorElement>) {
-    if (viewport === 'mobile') {
-      event.preventDefault();
-      window.location.href = event.currentTarget.href;
-    }
+    event.preventDefault();
+    window.location.href = event.currentTarget.href;
   }
 
   return (
     <nav className={className} role="navigation">
-      {viewport === 'mobile' && (
-        <NavLink
-          end
-          onClick={closeAside}
-          prefetch="intent"
-          style={activeLinkStyle}
-          to="/"
-        >
-          Home
-        </NavLink>
-      )}
       {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
         if (!item.url) return null;
 
@@ -67,6 +56,12 @@ export function HeaderMenu({
             item.url.includes(primaryDomainUrl)
             ? new URL(item.url).pathname
             : item.url;
+
+        // Check if the viewport is mobile
+        if (viewport !== 'mobile') {
+          return null; // Skip rendering the NavLink for non-mobile viewports
+        }
+
         return (
           <NavLink
             className="header-menu-item"
@@ -85,13 +80,52 @@ export function HeaderMenu({
   );
 }
 
+// HeaderCtas component
 function HeaderCtas({
   isLoggedIn,
   cart,
-}: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
+  menu,
+}: Pick<HeaderProps, 'isLoggedIn' | 'cart'> & { menu: HeaderProps['header']['menu'] }) {
+  const { publicStoreDomain } = useRootLoaderData();
+
+  function closeAside(event: React.MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault();
+    window.location.href = event.currentTarget.href;
+  }
+
   return (
     <nav className="header-ctas" role="navigation">
-      <HeaderMenuMobileToggle />
+      <a className="header-menu-mobile-toggle" href="#mobile-menu-aside" style={{ position: 'absolute', left: 10 }}>
+        <h3>☰</h3>
+      </a>
+      <div id="mobile-menu-aside" className="mobile-menu-aside">
+        <nav role="navigation">
+          {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
+            if (!item.url) return null;
+
+            // if the url is internal, we strip the domain
+            const url =
+              item.url.includes('myshopify.com') ||
+                item.url.includes(publicStoreDomain)
+                ? new URL(item.url).pathname
+                : item.url;
+
+            return (
+              <NavLink
+                className="side-menu-item"
+                end
+                key={item.id}
+                onClick={closeAside}
+                prefetch="intent"
+                style={activeLinkStyle}
+                to={url}
+              >
+                {item.title}
+              </NavLink>
+            );
+          })}
+        </nav>
+      </div>
       <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
         {isLoggedIn ? 'Account' : 'Sign in'}
       </NavLink>
@@ -101,13 +135,6 @@ function HeaderCtas({
   );
 }
 
-function HeaderMenuMobileToggle() {
-  return (
-    <a className="header-menu-mobile-toggle" href="#mobile-menu-aside">
-      <h3>☰</h3>
-    </a>
-  );
-}
 
 function SearchToggle() {
   return <a href="#search-aside">Search</a>;
